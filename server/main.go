@@ -4,7 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/iamtonmoy0/go-react-blog-app/database"
+	"github.com/iamtonmoy0/go-react-blog-app/routes"
 )
 
 func main() {
@@ -20,6 +22,10 @@ func main() {
 	fmt.Println("Database connection successful!")
 
 	app := fiber.New()
+	// logger
+	app.Use(logger.New())
+	// Setup routes
+	routes.BlogRouter(app)
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello World!")
 	})

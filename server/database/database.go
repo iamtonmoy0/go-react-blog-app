@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/iamtonmoy0/go-react-blog-app/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -10,6 +11,7 @@ func Database() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.AutoMigrate(new(models.Blog))
 	return db
 
 }
