@@ -9,5 +9,5 @@ func BlogRouter(app *fiber.App) {
 	app.Get("/all-blog", controller.GetAllBlog)
 	app.Post("/create-blog", controller.CreateBlog)
 	app.Put("/update-blog/:id", controller.UpdateBlog)
-	app.Delete("/delete-blog", controller.DeleteBlog)
+	app.Delete("/delete-blog/:id", controller.DeleteBlog)
 }
