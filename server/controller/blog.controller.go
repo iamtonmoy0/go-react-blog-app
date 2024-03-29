@@ -39,7 +39,27 @@ func CreateBlog(c *fiber.Ctx) error {
 
 // update blog
 func UpdateBlog(c *fiber.Ctx) error {
-	context := fiber.Map{"statusText": "ok", "msg": "list"}
+	// params
+	params := c.Params("id")
+
+	db := database.Database()
+	var record models.Blog
+	/***** check if id is valid or not ****/
+	db.First(&record, params)
+	context := fiber.Map{"statusText": "ok"}
+
+	if record.ID == 0 {
+		fmt.Println("no record found")
+		context["msg"] = "No Record Found"
+	}
+	if err := c.BodyParser(&record); err != nil {
+		context["errors"] = err
+	}
+	result := db.Save(record)
+	if result.Error != nil {
+		fmt.Println("error parsing database")
+	}
+	context["data"] = record
 
 	c.Status(200)
 	return c.JSON(context)
