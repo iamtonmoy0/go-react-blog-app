@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBlog() {
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -8,8 +10,9 @@ export default function CreateBlog() {
     const post = form.description.value;
     axios
       .post("http://localhost:3000/create-blog", { title, post })
-      .then((res) => {
-        window.alert("blog created", res);
+      .then(() => {
+        window.alert("blog created");
+        navigate("/");
       })
       .catch((err: void) => {
         console.log(err);
